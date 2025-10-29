@@ -1,0 +1,96 @@
+/* Exercise 1-2 Styles */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+/* Table Styles */
+.product-table {
+    border: 3px solid black;
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: min(600px, 95%);
+    font-size: 24px;
+}
+
+.table-header {
+    background-color: blue;
+    color: white;
+}
+
+.table-header th {
+    text-align: center;
+    border: 2px solid black;
+    padding: 8px;
+}
+
+.table-body {
+    background-color: LightGray;
+}
+
+.table-footer {
+    background-color: Tomato;
+}
+
+.table-footer td {
+    text-align: right;
+    border: 2px solid black;
+    padding: 8px;
+}
+
+.table-cell {
+    text-align: left;
+    border: 2px solid black;
+    padding: 8px;
+}
+
+.table-cell-number {
+    text-align: right;
+    border: 2px solid black;
+    padding: 8px;
+}
+
+.table-cell-center {
+    text-align: center;
+    border: 2px solid black;
+    padding: 8px;
+}
+
+/* Form Styles */
+.form-container {
+    max-width: 300px;
+    margin: 0 auto;
+    font-size: 24px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+}
+
+button {
+    background-color: DodgerBlue;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+button:hover {
+    background-color: #1e90ff;
+}
