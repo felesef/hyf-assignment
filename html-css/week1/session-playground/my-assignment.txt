@@ -3,3 +3,6 @@ When you are on main branch, create a branch named git-week1/exercise-3/<your-na
 Create a file named my-assignment.txt in the git folder, under /week1/session-playground
 
 Add some text to the my-assignment.txt file
+
+
+Add more text to the my-assignment.txt file
