@@ -1,0 +1,8 @@
+
+When you are on main branch, of the assignment repository create a branch named git-week1/exercise-1/<your-name> and move to it
+
+Create a folder named session-playground in the git folder, under /week1
+
+Create the following files inside the session-playground folder: apples-file.txt, bananas-file.txt, oranges-file.txt
+
+Add some text to each of the files
