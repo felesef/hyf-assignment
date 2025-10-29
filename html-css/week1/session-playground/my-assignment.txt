@@ -6,3 +6,6 @@ Add some text to the my-assignment.txt file
 
 
 Add more text to the my-assignment.txt file
+
+On your computer add some more text to the my-assignment.txt file
+
