@@ -6,3 +6,4 @@ Create a folder named session-playground in the git folder, under /week1
 Create the following files inside the session-playground folder: apples-file.txt, bananas-file.txt, oranges-file.txt
 
 Add some text to each of the files
+Add more text to the apples-file.txt
