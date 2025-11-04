@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     initThemeSystem();
     
+    initPrintButton();
+    
     addSkillIcons();
 });
 
@@ -39,6 +41,16 @@ function applyTheme(theme) {
     if (theme !== 'default') {
         body.classList.add(theme);
     }
+}
+
+function initPrintButton() {
+    const printButton = document.getElementById('printButton');
+    
+    if (!printButton) return;
+    
+    printButton.addEventListener('click', () => {
+        window.print();
+    });
 }
 
 function addSkillIcons() {

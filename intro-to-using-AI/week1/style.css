@@ -62,6 +62,11 @@ body > * {
     margin: 0 auto var(--spacing-lg);
 }
 
+body > .resume-footer {
+    margin-top: var(--spacing-xxl);
+    margin-bottom: 0;
+}
+
 header {
     text-align: center;
     margin-bottom: var(--spacing-xxl);
@@ -323,9 +328,17 @@ li {
     margin-bottom: 12px;
 }
 
-#colorButton {
-    display: block;
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
     margin: var(--spacing-xxl) auto;
+    flex-wrap: wrap;
+}
+
+#colorButton,
+#printButton {
+    display: block;
     padding: 12px var(--spacing-xxl);
     font-size: var(--font-size-large);
     font-family: Arial, sans-serif;
@@ -334,24 +347,37 @@ li {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-#colorButton:hover {
+#colorButton:hover,
+#printButton:hover {
     background-color: var(--button-hover);
+    transform: translateY(-2px);
 }
 
-#colorButton:focus {
+#colorButton:focus,
+#printButton:focus {
     outline: 2px solid var(--button-color);
     outline-offset: 2px;
 }
 
-#colorButton:active {
+#colorButton:active,
+#printButton:active {
     transform: scale(0.98);
 }
 
-#colorButton i {
+#colorButton i,
+#printButton i {
     margin-right: 8px;
+}
+
+#printButton {
+    background-color: var(--secondary-color);
+}
+
+#printButton:hover {
+    background-color: var(--primary-color);
 }
 
 /* Theme Styles - Inspired by Canva Resume Templates */
@@ -362,12 +388,18 @@ body.theme-modern {
 
 body.theme-modern > header,
 body.theme-modern > section,
-body.theme-modern > button {
+body.theme-modern > .button-group,
+body.theme-modern > .resume-footer {
     background-color: rgba(255, 255, 255, 0.98);
     border-radius: 12px;
     padding: var(--spacing-lg);
     margin-bottom: var(--spacing-lg);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+body.theme-modern > .button-group {
+    background-color: transparent;
+    box-shadow: none;
 }
 
 body.theme-modern > header {
@@ -405,12 +437,19 @@ body.theme-professional {
 
 body.theme-professional > header,
 body.theme-professional > section,
-body.theme-professional > button {
+body.theme-professional > .button-group,
+body.theme-professional > .resume-footer {
     background-color: rgba(255, 255, 255, 0.95);
     border-left: 4px solid #2196f3;
     padding: var(--spacing-lg);
     margin-bottom: var(--spacing-lg);
     box-shadow: 0 4px 16px rgba(33, 150, 243, 0.15);
+}
+
+body.theme-professional > .button-group {
+    background-color: transparent;
+    border-left: none;
+    box-shadow: none;
 }
 
 body.theme-professional > header {
@@ -457,13 +496,20 @@ body.theme-creative {
 
 body.theme-creative > header,
 body.theme-creative > section,
-body.theme-creative > button {
+body.theme-creative > .button-group,
+body.theme-creative > .resume-footer {
     background-color: rgba(255, 255, 255, 0.97);
     border-radius: 16px;
     padding: var(--spacing-lg);
     margin-bottom: var(--spacing-lg);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+body.theme-creative > .button-group {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
 }
 
 body.theme-creative > header {
@@ -505,15 +551,29 @@ body.theme-creative .skill-category:hover {
 
 /* Responsive adjustments for themes */
 @media (max-width: 768px) {
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    #colorButton,
+    #printButton {
+        width: 100%;
+        max-width: 300px;
+    }
+    
     body.theme-modern > header,
     body.theme-modern > section,
-    body.theme-modern > button,
+    body.theme-modern > .button-group,
+    body.theme-modern > .resume-footer,
     body.theme-professional > header,
     body.theme-professional > section,
-    body.theme-professional > button,
+    body.theme-professional > .button-group,
+    body.theme-professional > .resume-footer,
     body.theme-creative > header,
     body.theme-creative > section,
-    body.theme-creative > button {
+    body.theme-creative > .button-group,
+    body.theme-creative > .resume-footer {
         padding: var(--spacing-md);
         margin-bottom: var(--spacing-md);
     }
@@ -529,6 +589,32 @@ body.theme-creative .skill-category:hover {
     }
 }
 
+.resume-footer {
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    margin: var(--spacing-xxl) auto 0;
+    border-top: 2px solid var(--light-border);
+    background-color: var(--background-color);
+    color: var(--muted-text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.resume-footer p {
+    margin: 0 auto var(--spacing-xs);
+    font-size: var(--font-size-medium);
+    text-align: center;
+}
+
+.resume-footer .footer-text {
+    font-size: var(--font-size-small);
+    color: var(--muted-text);
+    font-style: italic;
+    margin: 0 auto;
+}
+
 @media print {
     :root {
         --background-color: var(--white);
@@ -539,8 +625,14 @@ body.theme-creative .skill-category:hover {
         padding: var(--spacing-md);
     }
     
-    #colorButton {
+    .button-group {
         display: none;
+    }
+    
+    .resume-footer {
+        margin-top: var(--spacing-xl);
+        padding-top: var(--spacing-lg);
+        border-top: 1px solid var(--border-color);
     }
     
     section {
