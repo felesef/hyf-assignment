@@ -67,7 +67,7 @@ console.log(`The startup: "${startupName}" contains ${startupName.length} charac
 
 
 //Rewrite the code to use a function
-let startupNameGenerator = (firstWords, secondWords) => {
+const startupNameGenerator = (firstWords, secondWords) => {
   const randomNumber = Math.floor(Math.random() * 10);
   const randomNumber2 = Math.floor(Math.random() * 10);
   return firstWords[randomNumber] + ' ' + secondWords[randomNumber2];
