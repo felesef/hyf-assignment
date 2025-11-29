@@ -16,7 +16,10 @@ const names = [
   // Write some code here
 
   // 1
-  names.splice(names.indexOf(nameToRemove), 1);
+  const index = names.indexOf(nameToRemove);
+  if (index !== -1) {
+    names.splice(index, 1);
+  }
 /*   // 2
   let names = [
     "Peter",
@@ -90,8 +93,7 @@ const travelInformation = {
     let totalPercentage = 0;
     
     // Loop through each series
-    for (let i = 0; i < seriesDurations.length; i++) {
-      const series = seriesDurations[i];
+    for (const series of seriesDurations) {
       // Convert days, hours, and minutes to total hours
       const totalHours = series.days * 24 + series.hours + series.minutes / 60;
       // Convert hours to years 

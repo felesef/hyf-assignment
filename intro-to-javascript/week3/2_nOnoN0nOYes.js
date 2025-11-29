@@ -8,10 +8,9 @@ const notes = [];
 
 // Save a note function
 function saveNote(content, id) {
-  notes.push({
-    content: content,
-    id: id
-  });
+  if (content.trim() !== '' && id != null) {
+    notes.push({ content, id });
+  }
 }
 
 // test the saveNote function
@@ -68,16 +67,8 @@ function insertNoteAtPosition(content, id, position) {
     return;
   }
   
-  const newNote = {
-    content: content,
-    id: id
-  };
-  
-  for (let i = notes.length; i > index; i--) {
-    notes[i] = notes[i - 1];
-  }
-  
-  notes[index] = newNote;
+  // Use splice to insert at specific position
+  notes.splice(index, 0, { content, id });
 }
 // test the insertNoteAtPosition function
 insertNoteAtPosition('This is a fourth test note', 4, 2);
