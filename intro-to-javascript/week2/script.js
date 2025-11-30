@@ -154,15 +154,22 @@ const boughtCandyPrices = [];
 const amountToSpend = Math.random() * 100;
 console.log(`You have ${amountToSpend} kr to spend on candy`);
 
+const candyPrices = {
+    "sweet" : 0.5,
+    "chocolate": 0.7,
+    "toffee": 1.1,
+    "chewingGum":  0.03
+}
+
 function addCandy(candyType, weight) {
     if (candyType === "sweet") {
-        boughtCandyPrices.push(weight * 0.5);
+        boughtCandyPrices.push(weight * candyPrices.sweet);
     } else if (candyType === "chocolate") {
-        boughtCandyPrices.push(weight * 0.7);
+        boughtCandyPrices.push(weight * candyPrices.chocolate);
     } else if (candyType === "toffee") {
-        boughtCandyPrices.push(weight * 1.1);
-    } else if (candyType === "chewing-gum") {
-        boughtCandyPrices.push(weight * 0.03);
+        boughtCandyPrices.push(weight * candyPrices.toffee);
+    } else if (candyType === "chewingGum") {
+        boughtCandyPrices.push(weight * candyPrices.chewingGum);
     } else {
         console.log(`Invalid candy type`);
     }
@@ -170,16 +177,10 @@ function addCandy(candyType, weight) {
     return boughtCandyPrices;
 }
 
-const candyPrices = {
-    "sweet" : 10,
-    "chocolate": 10,
-    "toffee": 10,
-    "chewingGum": 10
-}
-addCandy("sweet", candyPrices.sweet);
-addCandy("chocolate", candyPrices.chocolate);
-addCandy("toffee", candyPrices.toffee);
-addCandy("chewingGum", candyPrices.chewingGum);
+addCandy("sweet", 10);
+addCandy("chocolate", 10);
+addCandy("toffee", 10);
+addCandy("chewingGum", 10);
 
 
 function canBuyMoreCandy() {
