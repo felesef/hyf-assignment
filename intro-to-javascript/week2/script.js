@@ -63,10 +63,10 @@ function wearThisOutfit(temperature) {
     if (temperature > 25) {
         return `The temperature is ${temperature}°C, so it's warm outside, wear a t-shirt`;
     }
-    else if (temperature <= 25 && temperature > 15) {
+    else if (temperature <= 25) {
         return `The temperature is ${temperature}°C, so it's cool outside, wear a light jacket`;
     }
-    else if (temperature <= 15 && temperature > 10) {
+    else if (temperature <= 15) {
         return `The temperature is ${temperature}°C, so it's cold outside, wear a jacket`;
     }
     else if (temperature <= 10 && temperature > 0) {
@@ -92,20 +92,45 @@ console.log("\n========================================================\n");
 console.log("Student manager\n");
 const class07Students = [];
 function addStudentToClass(studentName) {
-  if (class07Students.length < 6 && !class07Students.includes(studentName)) {
-    class07Students.push(studentName);
-  } else if (class07Students.includes(studentName)) {
-    console.log(`Student ${studentName} is already in the class`);
-  } else if (studentName === "Queen") {
-    class07Students.push(studentName);
-    console.log(`Queen is added to the class she should always get a space. Even if the class has been filled out.`);
-  } else {
-    console.log(`Cannot add more students to class 07`);
-  }
+    if (typeof studentName !== "string") {
+        console.log("Invalid name: must be a string.");
+        return;
+    }
+
+    const name = studentName.trim();
+    if (name === "") {
+        console.log("Invalid name: empty string is not allowed.");
+        return;
+    }
+
+    const namePattern = /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/;
+    if (!namePattern.test(name)) {
+        console.log(`Invalid name: "${studentName}" contains illegal characters.`);
+        return;
+    }
+
+    if (name === "Queen") {
+        class07Students.push(name);
+        console.log("Queen is added to the class. She always gets a seat.");
+        return;
+    }
+
+    if (class07Students.includes(name)) {
+        console.log(`Student ${name} is already in the class.`);
+        return;
+    }
+
+    if (class07Students.length >= 6) {
+        console.log("Cannot add more students to class 07.");
+        return;
+    }
+
+    class07Students.push(name);
+    console.log(`Added ${name} to class 07.`);
 }
 
 function getNumberOfStudents() {
-  return class07Students.length;
+    return class07Students.length;
 }
 
 addStudentToClass("John");
@@ -138,22 +163,28 @@ function addCandy(candyType, weight) {
         boughtCandyPrices.push(weight * 1.1);
     } else if (candyType === "chewing-gum") {
         boughtCandyPrices.push(weight * 0.03);
-    }else {
+    } else {
         console.log(`Invalid candy type`);
     }
     console.log(`You have added ${weight} kg of ${candyType} to your basket`);
     return boughtCandyPrices;
 }
 
-addCandy("sweet", 10);
-addCandy("chocolate", 10);
-addCandy("toffee", 10);
-addCandy("chewing-gum", 10);
+const candyPrices = {
+    "sweet" : 10,
+    "chocolate": 10,
+    "toffee": 10,
+    "chewingGum": 10
+}
+addCandy("sweet", candyPrices.sweet);
+addCandy("chocolate", candyPrices.chocolate);
+addCandy("toffee", candyPrices.toffee);
+addCandy("chewingGum", candyPrices.chewingGum);
 
 
 function canBuyMoreCandy() {
     let totalPrice = 0;
-    for(let i = 0; i < boughtCandyPrices.length; i++) {
+    for (let i = 0; i < boughtCandyPrices.length; i++) {
         totalPrice += boughtCandyPrices[i];
     }
     if (totalPrice < amountToSpend) {
