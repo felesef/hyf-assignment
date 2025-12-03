@@ -5,7 +5,7 @@ const activeTimers = [];
 function getReply(command) {
   const lowerCommand = command.toLowerCase().trim();
 
-  // My name is [name]
+  // Name recognition
   if (lowerCommand.startsWith("hello my name is")) {
     const nameMatch = command.match(/hello my name is (.+)/i);
     if (nameMatch) {
@@ -19,7 +19,7 @@ function getReply(command) {
     }
   }
 
-  // What is my name?
+  // Name recognition - 2: What is my name?
   if (lowerCommand.includes("what is my name") || lowerCommand.includes("what's my name")) {
     if (userName === null) {
       return "I don't know your name yet. Please tell me your name first.";
@@ -27,7 +27,7 @@ function getReply(command) {
     return `Your name is ${userName}`;
   }
 
-  // Add [item] to my todo
+  // Todo list - 1: Add [item] to my todo
   if (lowerCommand.startsWith("add") && lowerCommand.includes("to my todo")) {
     const todoMatch = command.match(/add (.+) to my todo/i);
     if (todoMatch) {
@@ -41,7 +41,7 @@ function getReply(command) {
     }
   }
 
-  // Remove [item] from my todo
+  // Todo list - 2: Remove [item] from my todo
   if (lowerCommand.startsWith("remove") && lowerCommand.includes("from my todo")) {
     const todoMatch = command.match(/remove (.+) from my todo/i);
     if (todoMatch) {
@@ -55,7 +55,7 @@ function getReply(command) {
     }
   }
 
-  // What is on my todo?
+  // Todo list - 3: What is on my todo?
   if (lowerCommand.includes("what is on my todo") || lowerCommand.includes("what's on my todo")) {
     if (todoList.length === 0) {
       return "Your todo list is empty"; 
@@ -66,7 +66,7 @@ function getReply(command) {
     }
   }
 
-  // What day is it today?
+  // Date recognition: What day is it today?
   if (lowerCommand.includes("what day is it today") || lowerCommand.includes("what's the date")) {
     const today = new Date();
     const day = today.getDate();
@@ -95,7 +95,7 @@ function getReply(command) {
     }
   }
 
-  // Set a timer for X minutes
+  // Timer - 1: Set a timer for X minutes
   if (lowerCommand.startsWith("set a timer for")) {
     const timerMatch = command.match(/set a timer for (\d+) (minute|minutes)/i);
     if (timerMatch) {
@@ -116,7 +116,7 @@ function getReply(command) {
   }
 
 
-  // Additional: "Clear my todos"
+  // Todo list - 4: Clear my todos (additional command)
   if (lowerCommand.includes("clear my todos") || lowerCommand.includes("clear todos")) {
     const count = todoList.length;
     todoList.length = 0;
