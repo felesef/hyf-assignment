@@ -20,7 +20,7 @@ function getReply(command) {
   }
 
   // What is my name?
-  if (lowerCommand.includes("what is my name") ?? lowerCommand.includes("what's my name")) {
+  if (lowerCommand.includes("what is my name") || lowerCommand.includes("what's my name")) {
     if (userName === null) {
       return "I don't know your name yet. Please tell me your name first.";
     }
