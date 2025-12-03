@@ -142,7 +142,7 @@ addStudentToClass("Amber");
 addStudentToClass("Melih");
 addStudentToClass("John");
 addStudentToClass("Queen");
-console.log(getNumberOfStudents());
+console.log(`The number of students in class 07 is ${getNumberOfStudents()}`);
 
 console.log("\n========================================================\n");
 
