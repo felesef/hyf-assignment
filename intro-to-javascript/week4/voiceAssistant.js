@@ -20,7 +20,10 @@ function getReply(command) {
   }
 
   // Name recognition - 2: What is my name?
-  if (lowerCommand.includes("what is my name") || lowerCommand.includes("what's my name")) {
+  if (
+    lowerCommand.includes("what is my name") ||
+    lowerCommand.includes("what's my name")
+  ) {
     if (userName === null) {
       return "I don't know your name yet. Please tell me your name first.";
     }
@@ -42,7 +45,10 @@ function getReply(command) {
   }
 
   // Todo list - 2: Remove [item] from my todo
-  if (lowerCommand.startsWith("remove") && lowerCommand.includes("from my todo")) {
+  if (
+    lowerCommand.startsWith("remove") &&
+    lowerCommand.includes("from my todo")
+  ) {
     const todoMatch = command.match(/remove (.+) from my todo/i);
     if (todoMatch) {
       const todoItem = todoMatch[1].trim();
@@ -56,9 +62,12 @@ function getReply(command) {
   }
 
   // Todo list - 3: What is on my todo?
-  if (lowerCommand.includes("what is on my todo") || lowerCommand.includes("what's on my todo")) {
+  if (
+    lowerCommand.includes("what is on my todo") ||
+    lowerCommand.includes("what's on my todo")
+  ) {
     if (todoList.length === 0) {
-      return "Your todo list is empty"; 
+      return "Your todo list is empty";
     } else if (todoList.length === 1) {
       return `You have 1 todo - ${todoList[0]}`;
     } else {
@@ -67,12 +76,25 @@ function getReply(command) {
   }
 
   // Date recognition: What day is it today?
-  if (lowerCommand.includes("what day is it today") || lowerCommand.includes("what's the date")) {
+  if (
+    lowerCommand.includes("what day is it today") ||
+    lowerCommand.includes("what's the date")
+  ) {
     const today = new Date();
     const day = today.getDate();
     const monthNames = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
     ];
     const month = monthNames[today.getMonth()];
     const year = today.getFullYear();
@@ -81,7 +103,8 @@ function getReply(command) {
 
   // Math operations
   if (lowerCommand.startsWith("what is") || lowerCommand.startsWith("what's")) {
-    const mathMatch = command.match(/what is (.+)/i) || command.match(/what's (.+)/i);
+    const mathMatch =
+      command.match(/what is (.+)/i) || command.match(/what's (.+)/i);
     if (mathMatch) {
       const expression = mathMatch[1].trim();
       if (/[\d+\-*/().\s]+/.test(expression)) {
@@ -101,7 +124,7 @@ function getReply(command) {
     if (timerMatch) {
       const minutes = parseInt(timerMatch[1], 10);
       const milliseconds = minutes * 60 * 1000;
-      
+
       const timerId = setTimeout(() => {
         console.log("Timer done");
         const index = activeTimers.indexOf(timerId);
@@ -109,15 +132,17 @@ function getReply(command) {
           activeTimers.splice(index, 1);
         }
       }, milliseconds);
-      
+
       activeTimers.push(timerId);
       return `Timer set for ${minutes} ${minutes === 1 ? "minute" : "minutes"}`;
     }
   }
 
-
   // Todo list - 4: Clear my todos (additional command)
-  if (lowerCommand.includes("clear my todos") || lowerCommand.includes("clear todos")) {
+  if (
+    lowerCommand.includes("clear my todos") ||
+    lowerCommand.includes("clear todos")
+  ) {
     const count = todoList.length;
     todoList.length = 0;
     if (count === 0) {
@@ -128,7 +153,6 @@ function getReply(command) {
 
   // Default response
   return "I'm sorry, I didn't understand that command. Please try again.";
-
 }
 
 //Test function
@@ -139,8 +163,12 @@ function testGetReply() {
 
   function test(description, command, expected) {
     const actual = getReply(command);
-    const passed = actual === expected || (Array.isArray(expected) && Array.isArray(actual) && JSON.stringify(actual) === JSON.stringify(expected));
-    
+    const passed =
+      actual === expected ||
+      (Array.isArray(expected) &&
+        Array.isArray(actual) &&
+        JSON.stringify(actual) === JSON.stringify(expected));
+
     if (passed) {
       passedTests++;
       testResults.push(`PASS: ${description}`);
@@ -166,11 +194,7 @@ function testGetReply() {
   );
 
   // Test: Name introduction - 2: Ask for name
-  test(
-    "Ask for name",
-    "What is my name?",
-    "Your name is Benjamin"
-  );
+  test("Ask for name", "What is my name?", "Your name is Benjamin");
 
   // Test: Add todo item - 1
   test(
@@ -232,37 +256,17 @@ function testGetReply() {
     "You have 1 todo - watching a movie"
   );
   // Test: Add todo item - 10: Clear todos
-  test(
-    "Clear todos",
-    "Clear my todos",
-    "Cleared 1 todo from your list"
-  );
+  test("Clear todos", "Clear my todos", "Cleared 1 todo from your list");
   // Test: Add todo item - 11: Clear todos
-  test(
-    "Clear todos",
-    "Clear my todos",
-    "Your todo list is already empty"
-  );
+  test("Clear todos", "Clear my todos", "Your todo list is already empty");
   // Test: Add todo item - 12: List todos
-  test(
-    "List todos",
-    "What is on my todo?",
-    "Your todo list is empty"
-  );
+  test("List todos", "What is on my todo?", "Your todo list is empty");
 
   // Test: Math operation - addition
-  test(
-    "Math: 3 + 3",
-    "What is 3 + 3",
-    "6"
-  );
+  test("Math: 3 + 3", "What is 3 + 3", "6");
 
   // Test: Math operation - multiplication
-  test(
-    "Math: 4 * 12",
-    "What is 4 * 12",
-    "48"
-  );
+  test("Math: 4 * 12", "What is 4 * 12", "48");
 
   // Test: Timer setup
   test(
@@ -270,7 +274,6 @@ function testGetReply() {
     "Set a timer for 4 minutes",
     "Timer set for 4 minutes"
   );
-
 
   // Test: Date (check format, not exact value)
   const dateResult = getReply("What day is it today?");
@@ -292,4 +295,3 @@ function testGetReply() {
 }
 
 testGetReply();
-
