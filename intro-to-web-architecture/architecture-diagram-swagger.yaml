@@ -1,0 +1,299 @@
+openapi: 3.0.3
+info:
+  title: Recipe API
+  version: 1.0.0
+  description: |-
+    This API allows users to manage recipes (CRUD).
+    - Create: Add a new recipe (title, ingredients, instructions).
+    - Read: View all recipes and individual recipe details
+    - Update: Edit existing recipes
+    - Delete: Remove recipes they no longer want
+
+
+servers:
+  - url: https://api.recipe.com
+    description: Prod
+
+tags:
+  - name: Recipes
+    description: Recipe management endpoints
+
+paths:
+  /api/v1/recipes:
+    get:
+      tags: [Recipes]
+      summary: List all recipes
+      operationId: listRecipes
+      responses:
+        "200":
+          description: A list of recipes
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecipesResponse"
+              examples:
+                sample:
+                  summary: Example response
+                  value:
+                    recipes:
+                      - id: 1
+                        title: Recipe 1
+                        ingredients: ingredients 1
+                        instructions: instructions 1
+                      - id: 2
+                        title: Recipe 2
+                        ingredients: ingredients 2
+                        instructions: instructions 2
+                      - id: 3
+                        title: Recipe 3
+                        ingredients: ingredients 3
+                        instructions: instructions 3
+        "404":
+          description: Recipes not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                notFound:
+                  value:
+                    error:
+                      code: NOT_FOUND
+                      message: Recipes not found
+
+    post:
+      tags: [Recipes]
+      summary: Create a new recipe
+      operationId: createRecipe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecipeCreateRequest"
+            examples:
+              sample:
+                summary: Example request
+                value:
+                  recipe:
+                    title: Recipe 4
+                    ingredients: ingredients 4
+                    instructions: instructions 4
+      responses:
+        "201":
+          description: Recipe created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecipeResponse"
+              examples:
+                sample:
+                  summary: Example response
+                  value:
+                    recipe:
+                      id: 4
+                      title: Recipe 4
+                      ingredients: ingredients 4
+                      instructions: instructions 4
+        "400":
+          description: Bad request (invalid payload)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                badRequest:
+                  value:
+                    error:
+                      code: BAD_REQUEST
+                      message: Invalid recipe payload
+
+  /api/v1/recipes/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Recipe ID
+        schema:
+          type: integer
+          format: int64
+        example: 4
+
+    get:
+      tags: [Recipes]
+      summary: Get a recipe by ID
+      operationId: getRecipeById
+      responses:
+        "200":
+          description: Recipe details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecipeResponse"
+              examples:
+                sample:
+                  value:
+                    recipe:
+                      id: 1
+                      title: Recipe 1
+                      ingredients: ingredients 1
+                      instructions: instructions 1
+        "404":
+          description: Recipe not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                notFound:
+                  value:
+                    error:
+                      code: NOT_FOUND
+                      message: Recipe not found
+
+    put:
+      tags: [Recipes]
+      summary: Update a recipe
+      operationId: updateRecipe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecipeUpdateRequest"
+            examples:
+              sample:
+                value:
+                  recipe:
+                    title: Recipe 5
+                    ingredients: ingredients 5
+                    instructions: instructions 5
+      responses:
+        "201":
+          description: Recipe updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecipeResponse"
+              examples:
+                sample:
+                  value:
+                    recipe:
+                      id: 4
+                      title: Recipe 5
+                      ingredients: ingredients 5
+                      instructions: instructions 5
+        "400":
+          description: Bad request (invalid payload)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                badRequest:
+                  value:
+                    error:
+                      code: BAD_REQUEST
+                      message: Invalid recipe payload
+
+    delete:
+      tags: [Recipes]
+      summary: Delete a recipe
+      operationId: deleteRecipe
+      responses:
+        "204":
+          description: Recipe deleted (no content)
+        "404":
+          description: Recipe not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                notFound:
+                  value:
+                    error:
+                      code: NOT_FOUND
+                      message: Recipe not found
+
+components:
+  schemas:
+    Recipe:
+      type: object
+      required: [id, title, ingredients, instructions]
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        title:
+          type: string
+          example: Recipe 1
+        ingredients:
+          type: string
+          example: ingredients 1
+        instructions:
+          type: string
+          example: instructions 1
+
+    RecipeInput:
+      type: object
+      required: [title, ingredients, instructions]
+      properties:
+        title:
+          type: string
+          example: Recipe 4
+        ingredients:
+          type: string
+          example: ingredients 4
+        instructions:
+          type: string
+          example: instructions 4
+
+    RecipesResponse:
+      type: object
+      required: [recipes]
+      properties:
+        recipes:
+          type: array
+          items:
+            $ref: "#/components/schemas/Recipe"
+
+    RecipeResponse:
+      type: object
+      required: [recipe]
+      properties:
+        recipe:
+          $ref: "#/components/schemas/Recipe"
+
+    RecipeCreateRequest:
+      type: object
+      required: [recipe]
+      properties:
+        recipe:
+          $ref: "#/components/schemas/RecipeInput"
+
+    RecipeUpdateRequest:
+      type: object
+      required: [recipe]
+      properties:
+        recipe:
+          $ref: "#/components/schemas/RecipeInput"
+
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          example: NOT_FOUND
+        message:
+          type: string
+          example: Recipe not found
+
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          $ref: "#/components/schemas/Error"
