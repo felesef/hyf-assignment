@@ -2,15 +2,126 @@ let userName = null;
 const todoList = [];
 const activeTimers = [];
 
+const COMMANDS = {
+  HELLO_MY_NAME_IS: "hello my name is",
+  WHAT_IS_MY_NAME: "what is my name",
+  WHATS_MY_NAME: "what's my name",
+  WHAT_IS: "what is",
+  WHATS: "what's",
+  ADD: "add",
+  TO_MY_TODO: "to my todo",
+  REMOVE: "remove",
+  FROM_MY_TODO: "from my todo",
+  WHAT_IS_ON_MY_TODO: "what is on my todo",
+  WHATS_ON_MY_TODO: "what's on my todo",
+  WHAT_DAY_IS_IT_TODAY: "what day is it today",
+  WHATS_THE_DATE: "what's the date",
+  SET_A_TIMER_FOR: "set a timer for",
+  CLEAR_MY_TODOS: "clear my todos",
+  CLEAR_TODOS: "clear todos",
+  CLEAR_LAST_TIMER: "clear last timer",
+  CLEAR_TIMER: "clear timer",
+};
+
+function safeEvaluate(expression) {
+  expression = expression.replace(/\s/g, "");
+  
+  if (!/^[\d+\-*/().]+$/.test(expression)) {
+    throw new Error("Invalid characters in expression");
+  }
+  
+  let parenCount = 0;
+  for (let char of expression) {
+    if (char === "(") parenCount++;
+    if (char === ")") parenCount--;
+    if (parenCount < 0) throw new Error("Unbalanced parentheses");
+  }
+  if (parenCount !== 0) throw new Error("Unbalanced parentheses");
+  
+  let index = 0;
+  
+  function parseExpression() {
+    let left = parseTerm();
+    while (index < expression.length && (expression[index] === "+" || expression[index] === "-")) {
+      const op = expression[index++];
+      const right = parseTerm();
+      left = op === "+" ? left + right : left - right;
+    }
+    return left;
+  }
+  
+  function parseTerm() {
+    let left = parseFactor();
+    while (index < expression.length && (expression[index] === "*" || expression[index] === "/")) {
+      const op = expression[index++];
+      const right = parseFactor();
+      if (op === "*") {
+        left = left * right;
+      } else {
+        if (right === 0) throw new Error("Division by zero");
+        left = left / right;
+      }
+    }
+    return left;
+  }
+  
+  function parseFactor() {
+    if (index >= expression.length) throw new Error("Unexpected end of expression");
+    
+    if (expression[index] === "(") {
+      index++; // skip '('
+      const result = parseExpression();
+      if (index >= expression.length || expression[index] !== ")") {
+        throw new Error("Expected ')'");
+      }
+      index++; // skip ')'
+      return result;
+    }
+    
+    if (expression[index] === "-") {
+      index++;
+      return -parseFactor();
+    }
+    
+    if (expression[index] === "+") {
+      index++;
+      return parseFactor();
+    }
+    
+    let numStr = "";
+    while (index < expression.length && /[\d.]/.test(expression[index])) {
+      numStr += expression[index++];
+    }
+    
+    if (numStr === "") throw new Error("Expected number");
+    
+    const num = parseFloat(numStr);
+    if (isNaN(num)) throw new Error("Invalid number");
+    
+    return num;
+  }
+  
+  const result = parseExpression();
+  if (index < expression.length) {
+    throw new Error("Unexpected characters at end of expression");
+  }
+  
+  return result;
+}
+
 function getReply(command) {
+  if (typeof command !== "string") {
+    return "I'm sorry, I need a text command. Please try again.";
+  }
+  
   const lowerCommand = command.toLowerCase().trim();
 
   // Name recognition
-  if (lowerCommand.startsWith("hello my name is")) {
+  if (lowerCommand.startsWith(COMMANDS.HELLO_MY_NAME_IS)) {
     const nameMatch = command.match(/hello my name is (.+)/i);
     if (nameMatch) {
       const newName = nameMatch[1].trim();
-      if (userName === null) {
+      if (userName == null) {
         userName = newName;
         return `Nice to meet you ${newName}`;
       } else {
@@ -21,17 +132,17 @@ function getReply(command) {
 
   // Name recognition - 2: What is my name?
   if (
-    lowerCommand.includes("what is my name") ||
-    lowerCommand.includes("what's my name")
+    lowerCommand.includes(COMMANDS.WHAT_IS_MY_NAME) ||
+    lowerCommand.includes(COMMANDS.WHATS_MY_NAME)
   ) {
-    if (userName === null) {
+    if (userName == null) {
       return "I don't know your name yet. Please tell me your name first.";
     }
     return `Your name is ${userName}`;
   }
 
   // Todo list - 1: Add [item] to my todo
-  if (lowerCommand.startsWith("add") && lowerCommand.includes("to my todo")) {
+  if (lowerCommand.startsWith(COMMANDS.ADD) && lowerCommand.includes(COMMANDS.TO_MY_TODO)) {
     const todoMatch = command.match(/add (.+) to my todo/i);
     if (todoMatch) {
       const todoItem = todoMatch[1].trim();
@@ -46,8 +157,8 @@ function getReply(command) {
 
   // Todo list - 2: Remove [item] from my todo
   if (
-    lowerCommand.startsWith("remove") &&
-    lowerCommand.includes("from my todo")
+    lowerCommand.startsWith(COMMANDS.REMOVE) &&
+    lowerCommand.includes(COMMANDS.FROM_MY_TODO)
   ) {
     const todoMatch = command.match(/remove (.+) from my todo/i);
     if (todoMatch) {
@@ -63,8 +174,8 @@ function getReply(command) {
 
   // Todo list - 3: What is on my todo?
   if (
-    lowerCommand.includes("what is on my todo") ||
-    lowerCommand.includes("what's on my todo")
+    lowerCommand.includes(COMMANDS.WHAT_IS_ON_MY_TODO) ||
+    lowerCommand.includes(COMMANDS.WHATS_ON_MY_TODO)
   ) {
     if (todoList.length === 0) {
       return "Your todo list is empty";
@@ -77,8 +188,8 @@ function getReply(command) {
 
   // Date recognition: What day is it today?
   if (
-    lowerCommand.includes("what day is it today") ||
-    lowerCommand.includes("what's the date")
+    lowerCommand.includes(COMMANDS.WHAT_DAY_IS_IT_TODAY) ||
+    lowerCommand.includes(COMMANDS.WHATS_THE_DATE)
   ) {
     const today = new Date();
     const day = today.getDate();
@@ -102,14 +213,14 @@ function getReply(command) {
   }
 
   // Math operations
-  if (lowerCommand.startsWith("what is") || lowerCommand.startsWith("what's")) {
+  if (lowerCommand.startsWith(COMMANDS.WHAT_IS) || lowerCommand.startsWith(COMMANDS.WHATS)) {
     const mathMatch =
-      command.match(/what is (.+)/i) || command.match(/what's (.+)/i);
+      command.match(/^what is (.+)$/i) || command.match(/^what's (.+)$/i);
     if (mathMatch) {
       const expression = mathMatch[1].trim();
-      if (/[\d+\-*/().\s]+/.test(expression)) {
+      if (/^[\d+\-*/().\s]+$/.test(expression)) {
         try {
-          const result = eval(expression);
+          const result = safeEvaluate(expression);
           return result.toString();
         } catch (error) {
           return "I couldn't calculate that. Please try again with a valid math expression.";
@@ -119,7 +230,7 @@ function getReply(command) {
   }
 
   // Timer - 1: Set a timer for X minutes
-  if (lowerCommand.startsWith("set a timer for")) {
+  if (lowerCommand.startsWith(COMMANDS.SET_A_TIMER_FOR)) {
     const timerMatch = command.match(/set a timer for (\d+) (minute|minutes)/i);
     if (timerMatch) {
       const minutes = parseInt(timerMatch[1], 10);
@@ -138,10 +249,23 @@ function getReply(command) {
     }
   }
 
+  // Timer - 2: Clear the last timer
+  if (
+    lowerCommand.includes(COMMANDS.CLEAR_LAST_TIMER) ||
+    lowerCommand.includes(COMMANDS.CLEAR_TIMER)
+  ) {
+    if (activeTimers.length === 0) {
+      return "No active timers to clear";
+    }
+    const lastTimerId = activeTimers.pop();
+    clearTimeout(lastTimerId);
+    return "Last timer cleared";
+  }
+
   // Todo list - 4: Clear my todos (additional command)
   if (
-    lowerCommand.includes("clear my todos") ||
-    lowerCommand.includes("clear todos")
+    lowerCommand.includes(COMMANDS.CLEAR_MY_TODOS) ||
+    lowerCommand.includes(COMMANDS.CLEAR_TODOS)
   ) {
     const count = todoList.length;
     todoList.length = 0;
