@@ -21,27 +21,23 @@ const knexInstance = knex({
   useNullAsDefault: true,
 });
 
-// Serve OpenAPI spec
 app.get("/api-docs.json", (req, res) => {
   const openApiPath = path.join(__dirname, "openapi.json");
   const openApi = JSON.parse(fs.readFileSync(openApiPath, "utf8"));
   res.json(openApi);
 });
 
-// Serve Swagger UI at root
 app.get("/", (req, res) => {
   const htmlPath = path.join(__dirname, "index.html");
   const html = fs.readFileSync(htmlPath, "utf8");
   res.send(html);
 });
 
-// Here is an example of the first route, /all-users, which returns all users sorted by their ID
 app.get("/all-users", async (req, res) => {
   const rows = await knexInstance("users").orderBy("id", "asc");
   res.json(rows);
 });
 
-// TODO implement more routes here
 app.get("/unconfirmed-users", async (req, res) => {
   const rows = await knexInstance("users")
     .whereNull("confirmed_at")
@@ -68,15 +64,15 @@ app.get("/user-count", async (req, res) => {
 
 app.get("/last-name-count", async (req, res) => {
   const lastName = req.query.lastName || req.query.lastname;
-  //regex to check if the lastName is a string
   const regex = /^[a-zA-Z]+$/;
   if (!regex.test(lastName) || lastName.trim() === "" || !lastName) {
     return res.status(400).json({ error: "lastName parameter is required and must be a string" });
   }
+  const lastNameList = await knexInstance("users").select("first_name", "last_name").whereRaw("LOWER(last_name) = LOWER(?) ORDER BY first_name ASC", [lastName]);
   const count = await knexInstance("users")
     .whereRaw("LOWER(last_name) = LOWER(?)", [lastName])
     .count("* as count");
-  res.json(count);
+  res.json({ count, lastNameList });
 });
 
 app.get("/first-user", async (req, res) => {
