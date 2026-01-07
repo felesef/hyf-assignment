@@ -37,49 +37,60 @@ app.get("/", (req, res) => {
 
 // Here is an example of the first route, /all-users, which returns all users sorted by their ID
 app.get("/all-users", async (req, res) => {
-  const rows = await knexInstance.raw("SELECT * FROM users ORDER BY id ASC;");
+  const rows = await knexInstance("users").orderBy("id", "asc");
   res.json(rows);
 });
 
 // TODO implement more routes here
 app.get("/unconfirmed-users", async (req, res) => {
-  const rows = await knexInstance.raw("SELECT * FROM users WHERE confirmed_at IS NULL ORDER BY id ASC;");
+  const rows = await knexInstance("users")
+    .whereNull("confirmed_at")
+    .orderBy("id", "asc");
   res.json(rows);
 });
 
 app.get("/gmail-users", async (req, res) => {
-  const rows = await knexInstance.raw("SELECT * FROM users WHERE email LIKE '%@gmail.com';");
+  const rows = await knexInstance("users")
+    .where("email", "like", "%@gmail.com");
   res.json(rows);
 });
 
 app.get("/2022-users", async (req, res) => {
-    const rows = await knexInstance.raw("SELECT * FROM users WHERE created_at >= '2022-01-01' AND created_at <= '2022-12-31';");
-    res.json(rows);
+  const rows = await knexInstance("users")
+    .whereBetween("created_at", ["2022-01-01", "2022-12-31"]);
+  res.json(rows);
 });
 
 app.get("/user-count", async (req, res) => {
-    const rows = await knexInstance.raw("SELECT COUNT(*) FROM users;");
-    res.json(rows);
+  const count = await knexInstance("users").count("* as count");
+  res.json(count);
 });
 
 app.get("/last-name-count", async (req, res) => {
-    const lastName = req.query.lastName || req.query.lastname;
-    
-    if (!lastName) {
-        return res.status(400).json({ error: "lastName parameter is required" });
-    }
-    const rows = await knexInstance.raw("SELECT COUNT(*) as count FROM users WHERE LOWER(last_name) = LOWER(?)", [lastName]);
-    res.json(rows);
+  const lastName = req.query.lastName || req.query.lastname;
+  //regex to check if the lastName is a string
+  const regex = /^[a-zA-Z]+$/;
+  if (!regex.test(lastName) || lastName.trim() === "" || !lastName) {
+    return res.status(400).json({ error: "lastName parameter is required and must be a string" });
+  }
+  const count = await knexInstance("users")
+    .whereRaw("LOWER(last_name) = LOWER(?)", [lastName])
+    .count("* as count");
+  res.json(count);
 });
 
 app.get("/first-user", async (req, res) => {
-    const rows = await knexInstance.raw("SELECT * FROM users ORDER BY id ASC LIMIT 1;");
-    res.json(rows);
+  const rows = await knexInstance("users")
+    .orderBy("created_at", "asc")
+    .limit(1);
+  res.json(rows);
 });
 
 app.get("/last-user", async (req, res) => {
-    const rows = await knexInstance.raw("SELECT * FROM users ORDER BY id DESC LIMIT 1;");
-    res.json(rows);
+  const rows = await knexInstance("users")
+    .orderBy("created_at", "desc")
+    .limit(1);
+  res.json(rows);
 });
 
 app.post("/add-user", async (req, res) => {
@@ -89,14 +100,20 @@ app.post("/add-user", async (req, res) => {
   }
   const created_at = new Date().toISOString();
   
-  const maxIdResult = await knexInstance.raw("SELECT MAX(id) as max_id FROM users;");
-  const maxId = maxIdResult[0]?.max_id || 0;
+  const maxIdResult = await knexInstance("users").max("id as max_id").first();
+  const maxId = maxIdResult?.max_id || 0;
   const id = maxId + 1;
   
-  await knexInstance.raw("INSERT INTO users (id, created_at, first_name, last_name, email) VALUES (?, ?, ?, ?, ?)", [id, created_at, first_name, last_name, email]);
+  await knexInstance("users").insert({
+    id,
+    created_at,
+    first_name,
+    last_name,
+    email
+  });
   
-  const newUser = await knexInstance.raw("SELECT * FROM users WHERE id = ?", [id]);
-  res.status(201).json(newUser[0]);
+  const newUser = await knexInstance("users").where("id", id).first();
+  res.status(201).json(newUser);
 });
 
 app.put("/update-user", async (req, res) => {
@@ -105,27 +122,33 @@ app.put("/update-user", async (req, res) => {
     return res.status(400).json({ error: "id, first_name, last_name, and email are required" });
   }
   
-  const existingUser = await knexInstance.raw("SELECT * FROM users WHERE id = ?", [id]);
-  if (!existingUser || existingUser.length === 0) {
+  const existingUser = await knexInstance("users").where("id", id).first();
+  if (!existingUser) {
     return res.status(404).json({ error: "User not found" });
   }
   
-  await knexInstance.raw("UPDATE users SET first_name = ?, last_name = ?, email = ? WHERE id = ?", [first_name, last_name, email, id]);
+  await knexInstance("users")
+    .where("id", id)
+    .update({
+      first_name,
+      last_name,
+      email
+    });
   
-  const updatedUser = await knexInstance.raw("SELECT * FROM users WHERE id = ?", [id]);
-  res.json(updatedUser[0]);
+  const updatedUser = await knexInstance("users").where("id", id).first();
+  res.json(updatedUser);
 });
 
 app.delete("/delete-user", async (req, res) => {
   const { id } = req.body;
-  if (!id) {
-    return res.status(400).json({ error: "id is required" });
+  if (!id || isNaN(id) || id <= 0 || typeof id !== "number") {
+    return res.status(400).json({ error: "id is required and must be a positive number" });
   }
-  const existingUser = await knexInstance.raw("SELECT * FROM users WHERE id = ?", [id]);
-  if (!existingUser || existingUser.length === 0) {
+  const existingUser = await knexInstance("users").where("id", id).first();
+  if (!existingUser) {
     return res.status(404).json({ error: "User not found" });
   }
-  await knexInstance.raw("DELETE FROM users WHERE id = ?", [id]);
+  await knexInstance("users").where("id", id).delete();
   res.status(204).send();
 });
 
