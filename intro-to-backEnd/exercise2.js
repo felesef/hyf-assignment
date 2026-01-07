@@ -1,5 +1,11 @@
 import express from "express";
 import knex from "knex";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = 3000;
@@ -12,11 +18,21 @@ const knexInstance = knex({
   connection: {
     filename: "/Users/efe/Desktop/HYFT/hyf-assignment/courses/foundation/intro-to-backend/database.sqlite3",
   },
-  useNullAsDefault: true,  // Omit warning in console
+  useNullAsDefault: true,
 });
 
+// Serve OpenAPI spec
+app.get("/api-docs.json", (req, res) => {
+  const openApiPath = path.join(__dirname, "openapi.json");
+  const openApi = JSON.parse(fs.readFileSync(openApiPath, "utf8"));
+  res.json(openApi);
+});
+
+// Serve Swagger UI at root
 app.get("/", (req, res) => {
-  res.send("Hello from exercise 2!");
+  const htmlPath = path.join(__dirname, "index.html");
+  const html = fs.readFileSync(htmlPath, "utf8");
+  res.send(html);
 });
 
 // Here is an example of the first route, /all-users, which returns all users sorted by their ID
