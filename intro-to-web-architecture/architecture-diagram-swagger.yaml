@@ -15,7 +15,7 @@ servers:
     description: Prod
 
 tags:
-  - name: Recipes
+  - name: Recipe s
     description: Recipe management endpoints
 
 paths:
