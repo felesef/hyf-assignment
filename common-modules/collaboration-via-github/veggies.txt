@@ -1,5 +1,7 @@
 carrot
 onion
-garlic
+eggplant
 tomato
 potato
+pumpkin
+cucumber
