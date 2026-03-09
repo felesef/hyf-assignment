@@ -3,3 +3,5 @@ onion
 corn
 tomato
 potato
+pumpkin
+cucumber
