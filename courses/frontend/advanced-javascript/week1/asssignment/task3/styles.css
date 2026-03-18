@@ -1,0 +1,70 @@
+:root {
+  --bg: #f6f7fb;
+  --card: #ffffff;
+  --card-border: #e3e6f0;
+  --text: #111827;
+  --muted: rgba(17, 24, 39, 0.7);
+  --accent: #4f46e5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, ui-sans-serif, system-ui, -apple-system, Segoe UI,
+    Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.header {
+  padding: 28px 18px 10px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.header h1 {
+  margin: 0 0 6px;
+  font-size: 22px;
+}
+
+.header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.grid {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px 18px 40px;
+  display: flex;
+  flex-direction: column; /* list view */
+  gap: 12px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 14px 16px 12px;
+  box-shadow: 0 6px 18px rgba(17, 24, 39, 0.06);
+}
+
+.card h2 {
+  margin: 0 0 10px;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.output {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: inherit;
+  color: rgba(17, 24, 39, 0.95);
+  font-size: 13px;
+}
+
