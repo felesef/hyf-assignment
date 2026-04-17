@@ -1,6 +1,18 @@
 // Wires services + views. Checks config and starts the UI.
+import { APP_CONFIG } from './config.js';
+import { ScreenshotService } from './services/ScreenshotService.js';
+import { SavedScreenshotsService } from './services/SavedScreenshotsService.js';
+import { CaptureView } from './CaptureView.js';
+import { SavedListView } from './SavedListView.js';
+import {
+  AppError,
+  ConfigError,
+  NetworkError,
+  StorageError,
+} from './errors.js';
+
 function readConfig() {
-  const c = window.APP_CONFIG;
+  const c = APP_CONFIG;
   if (!c || !c.rapidApiKey || !c.crudCrudScreenshotsUrl) {
     throw new ConfigError(
       'Missing config. Open js/config.js and set rapidApiKey and crudCrudScreenshotsUrl (see js/config.example.js).',
@@ -17,7 +29,7 @@ function readConfig() {
   return { rapidApiKey: key, crudCrudScreenshotsUrl: url };
 }
 
-function init() {
+export function init() {
   let config;
   try {
     config = readConfig();
@@ -54,5 +66,3 @@ function init() {
 
   savedListView.loadAndRender();
 }
-
-init();

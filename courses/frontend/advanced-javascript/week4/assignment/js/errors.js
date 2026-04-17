@@ -1,4 +1,4 @@
-class AppError extends Error {
+export class AppError extends Error {
   constructor(message) {
     super(message);
     this.name = 'AppError';
@@ -10,7 +10,7 @@ class AppError extends Error {
   }
 }
 
-class ValidationError extends AppError {
+export class ValidationError extends AppError {
   constructor(message) {
     super(message);
     this.name = 'ValidationError';
@@ -18,7 +18,7 @@ class ValidationError extends AppError {
   }
 }
 
-class ApiError extends AppError {
+export class ApiError extends AppError {
   constructor(message, status = null) {
     super(message);
     this.name = 'ApiError';
@@ -32,7 +32,7 @@ class ApiError extends AppError {
   }
 }
 
-class NetworkError extends AppError {
+export class NetworkError extends AppError {
   constructor(message) {
     super(message);
     this.name = 'NetworkError';
@@ -44,7 +44,7 @@ class NetworkError extends AppError {
   }
 }
 
-class StorageError extends AppError {
+export class StorageError extends AppError {
   constructor(message) {
     super(message);
     this.name = 'StorageError';
@@ -56,7 +56,7 @@ class StorageError extends AppError {
   }
 }
 
-class ConfigError extends AppError {
+export class ConfigError extends AppError {
   constructor(message) {
     super(message);
     this.name = 'ConfigError';

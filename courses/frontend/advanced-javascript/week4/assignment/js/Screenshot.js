@@ -1,6 +1,8 @@
+import { ValidationError } from './errors.js';
+
 // One screenshot: page URL + image URL (+ CrudCrud _id when saved).
 // Renders a small card; Save / Delete wired through callbacks.
-class Screenshot {
+export class Screenshot {
   constructor({ url, imageUrl, id = null }) {
     this.url = url;
     this.imageUrl = imageUrl;

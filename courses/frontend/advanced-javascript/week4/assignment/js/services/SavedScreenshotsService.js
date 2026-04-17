@@ -1,5 +1,7 @@
+import { NetworkError, StorageError } from '../errors.js';
+
 // CrudCrud REST API for saved screenshots (JSON: { url, imageUrl }).
-class SavedScreenshotsService {
+export class SavedScreenshotsService {
   constructor(collectionBaseUrl) {
     this.baseUrl = collectionBaseUrl.replace(/\/$/, '');
   }

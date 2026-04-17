@@ -1,5 +1,13 @@
+import { Screenshot } from './Screenshot.js';
+import {
+  AppError,
+  NetworkError,
+  StorageError,
+  ValidationError,
+} from './errors.js';
+
 // Loads saved screenshots from CrudCrud and renders a Screenshot card per row.
-class SavedListView {
+export class SavedListView {
   constructor(storageService) {
     this.storageService = storageService;
     this.root = document.getElementById('saved-root');

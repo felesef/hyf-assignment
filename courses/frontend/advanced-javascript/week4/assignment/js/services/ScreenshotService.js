@@ -1,5 +1,7 @@
+import { ApiError, NetworkError } from '../errors.js';
+
 // RapidAPI Website Screenshot 6 (GET + query params).
-class ScreenshotService {
+export class ScreenshotService {
   static API_URL = 'https://website-screenshot6.p.rapidapi.com/screenshot';
   static API_HOST = 'website-screenshot6.p.rapidapi.com';
 

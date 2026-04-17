@@ -1,5 +1,13 @@
+import { Screenshot } from './Screenshot.js';
+import {
+  AppError,
+  ApiError,
+  NetworkError,
+  ValidationError,
+} from './errors.js';
 
-class CaptureView {
+// URL input + capture flow + preview area (unsaved Screenshot).
+export class CaptureView {
   constructor(screenshotService) {
     this.screenshotService = screenshotService;
     this.root = document.getElementById('capture-root');
