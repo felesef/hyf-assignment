@@ -40,9 +40,6 @@ export const Footer = () => {
           <li>
             <a href="https://google.com">On the streets at night</a>
           </li>
-          <li>
-            <a href="https://linkedin.com">LinkedIn</a>
-          </li>
           {/* 🧑🏽‍🚀 Task - Week 2 */}
           {/* Create a <SocialMediaItem /> component and replace all of the list items! */}
           {/* SocialMediaItem should accept the following props: url, title, icon. */}
