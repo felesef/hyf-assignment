@@ -1,5 +1,7 @@
-.app {
-  background-color: black;
-  width: 100vw;
-  height: 100vh;
+.mission {
+  margin: 0;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: var(--font-size-md);
+  max-width: 52rem;
 }

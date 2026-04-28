@@ -1,0 +1,44 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24);
+}
+
+.lead {
+  margin: 0;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: var(--font-size-md);
+  max-width: 42rem;
+}
+
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: var(--spacing-24);
+  align-items: center;
+  justify-items: center;
+  padding-block-start: var(--spacing-16);
+  border-top: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.cell {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 4rem;
+}
+
+.logo {
+  max-width: 100%;
+  width: 7rem;
+  height: auto;
+  max-height: 3.5rem;
+  object-fit: contain;
+  opacity: 0.95;
+}
