@@ -1,5 +1,30 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styles from './Footer.module.css';
+
+const PAGES = [
+  { to: "/", label: "Home" },
+  { to: "/about_us", label: "About us" },
+  { to: "/destination", label: "Destination" },
+  { to: "/nasa_collaboration", label: "NASA Collaboration" },
+];
+
+const SOCIAL_LINKS = [
+  { url: "https://facebook.com", title: "Facebook", icon: "🌐" },
+  { url: "https://instagram.com", title: "Instagram", icon: "📸" },
+  { url: "https://tiktok.com", title: "TikTok", icon: "🎵" },
+  { url: "https://google.com", title: "On the streets at night", icon: "✨" },
+  { url: "https://linkedin.com", title: "LinkedIn", icon: "💼" },
+];
+
+const SocialMediaItem = ({ url, title, icon }) => {
+  return (
+    <li>
+      <a href={url} target="_blank" rel="noreferrer">
+        {icon} {title}
+      </a>
+    </li>
+  );
+};
 
 export const Footer = () => {
   const { pathname } = useLocation();
@@ -14,35 +39,29 @@ export const Footer = () => {
       {/* 🧑🏽‍🚀 Task - Week 2 */}
       {/* Create a new list for the Pages. */}
       {/* We need to use the <Link /> component here. */}
-      {/* <div className={styles.pages}>
-        <h3>Pages</h3>
-        <ul>
-          <li> <Link/> </li>
-          ...
-        </ul>
-      </div> */}
       {/* Docs for the Link: https://reactrouter.com/api/components/Link#link. */}
+      <div className={styles.footerLinks}>
+        <h3>Pages</h3>
+        <ul className={styles.footerList}>
+          {PAGES.map((page) => (
+            <li key={page.to}>
+              <Link to={page.to}>{page.label}</Link>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-      {/* 🧑🏽‍🚀 Task - Week 1 */}
-      {/* Add a new list item for LINKEDIN */}
       <div className={styles.footerLinks}>
         <h3>Follow us</h3>
         <ul className={styles.footerList}>
-          <li>
-            <a href="https://facebook.com">Facebook</a>
-          </li>
-          <li>
-            <a href="https://instagram.com">Instagram</a>
-          </li>
-          <li>
-            <a href="https://tiktok.com">Tiktok</a>
-          </li>
-          <li>
-            <a href="https://google.com">On the streets at night</a>
-          </li>
-          <li>
-            <a href="https://linkedin.com">LinkedIn</a>
-          </li>
+          {SOCIAL_LINKS.map((socialLink) => (
+            <SocialMediaItem
+              key={socialLink.title}
+              url={socialLink.url}
+              title={socialLink.title}
+              icon={socialLink.icon}
+            />
+          ))}
           {/* 🧑🏽‍🚀 Task - Week 2 */}
           {/* Create a <SocialMediaItem /> component and replace all of the list items! */}
           {/* SocialMediaItem should accept the following props: url, title, icon. */}
