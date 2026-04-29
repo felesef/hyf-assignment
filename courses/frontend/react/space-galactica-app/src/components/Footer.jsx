@@ -9,18 +9,19 @@ const PAGES = [
 ];
 
 const SOCIAL_LINKS = [
-  { url: "https://facebook.com", title: "Facebook", icon: "🌐" },
-  { url: "https://instagram.com", title: "Instagram", icon: "📸" },
-  { url: "https://tiktok.com", title: "TikTok", icon: "🎵" },
-  { url: "https://google.com", title: "On the streets at night", icon: "✨" },
-  { url: "https://linkedin.com", title: "LinkedIn", icon: "💼" },
+  { url: "https://facebook.com", title: "Facebook", icon: "/business_partners/facebook-logo.png" },
+  { url: "https://instagram.com", title: "Instagram", icon: "/business_partners/instagram-logo.jpeg" },
+  { url: "https://tiktok.com", title: "TikTok", icon: "/business_partners/tiktok-logo.png" },
+  { url: "https://google.com", title: "Google", icon: "/business_partners/google-logo.png" },
+  { url: "https://linkedin.com", title: "LinkedIn", icon: "/business_partners/linkedin-logo.png" },
 ];
 
 const SocialMediaItem = ({ url, title, icon }) => {
   return (
     <li>
-      <a href={url} target="_blank" rel="noreferrer">
-        {icon} {title}
+      <a className={styles.socialLink} href={url} target="_blank" rel="noreferrer">
+        <img className={styles.socialIcon} src={icon} alt={`${title} logo`} />
+        {title}
       </a>
     </li>
   );
