@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mentors demo – forEach, map, filter</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Mentors demo – forEach, map, filter</h1>
+    <p class="intro">
+      Use the buttons to see different array operations. Results are rendered
+      below (no console).
+    </p>
+
+    <div class="actions">
+      <button
+        type="button"
+        class="active"
+        onclick="
+          setActive(this);
+          showAllMentors();
+        "
+      >
+        forEach – Show all mentors (cards)
+      </button>
+      <button
+        type="button"
+        onclick="
+          setActive(this);
+          showNamesOnly();
+        "
+      >
+        map – Names only (array of strings)
+      </button>
+      <button
+        type="button"
+        onclick="
+          setActive(this);
+          showExperienced();
+        "
+      >
+        filter – Experienced (7+ years)
+      </button>
+      <button
+        type="button"
+        onclick="
+          setActive(this);
+          showNamesStartingWithA();
+        "
+      >
+        filter – Name starts with "A"
+      </button>
+    </div>
+
+    <div class="result-label" id="resultLabel">Result</div>
+    <div id="result"></div>
+
+    <script src="index.js"></script>
+  </body>
+</html>
