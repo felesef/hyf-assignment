@@ -20,6 +20,18 @@ const navbarItems = [
   }
 ];
 
+const NavItem = ({ title, link, isActive, index }) => {
+  return (
+    <li className={classNames(styles.navbarLinks, {
+      [styles.isLinkActive]: isActive,
+    })}>
+      <Link to={link}>
+        <b>{index}</b> {title}
+      </Link>
+    </li>
+  );
+};
+
 export const Navbar = () => {
   const currentPath = useLocation().pathname;
 
@@ -34,21 +46,24 @@ export const Navbar = () => {
         <ul className={styles.navbarList}>
           {/* 🧑🏽‍🚀 Task - Week 2 */}
           {/* Create a <NavItem> component, which accepts the following props: title, link, isActive.  */}
-          <li className={classNames(styles.navbarLinks, {
-            [styles.isLinkActive]: navbarItems[0].link === currentPath,
-          })}>
-            <Link to={navbarItems[0].link}><b>01</b> {navbarItems[0].title}</Link>
-          </li>
-          <li className={classNames(styles.navbarLinks, {
-            [styles.isLinkActive]: navbarItems[1].link === currentPath,
-          })}>
-            <Link to={navbarItems[1].link}><b>02</b> {navbarItems[1].title}</Link>
-          </li>
-          <li className={classNames(styles.navbarLinks, {
-            [styles.isLinkActive]: navbarItems[2].link === currentPath,
-          })}>
-            <Link to={navbarItems[2].link}><b>03</b> NASA COLLABORATION</Link>
-          </li>
+          <NavItem
+            index="01"
+            title={navbarItems[0].title}
+            link={navbarItems[0].link}
+            isActive={navbarItems[0].link === currentPath}
+          />
+          <NavItem
+            index="02"
+            title={navbarItems[1].title}
+            link={navbarItems[1].link}
+            isActive={navbarItems[1].link === currentPath}
+          />
+          <NavItem
+            index="03"
+            title={navbarItems[2].title}
+            link={navbarItems[2].link}
+            isActive={navbarItems[2].link === currentPath}
+          />
           {/* 🧑🏽‍🚀 Task - Week 3 */}
           {/* Replace repeating content by using .map() and the previously created NavItem component. */}
           <li className={styles.wishlistBadge} aria-label="Wishlist">

@@ -43,3 +43,15 @@
 .footerList li {
   padding-block: var(--spacing-04);
 }
+
+.socialLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-08);
+}
+
+.socialIcon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
