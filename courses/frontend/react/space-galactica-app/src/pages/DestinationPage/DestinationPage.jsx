@@ -1,7 +1,8 @@
 import { useState } from "react";
 import styles from "./DestinationPage.module.css";
-import { PlanetCard } from "./PlanetCard";
-import { PlanetsWishlistItem } from "./PlanetsWishlistItem";
+import { AddWishlistItem } from "./AddWishlistItem.jsx";
+import { PlanetCard } from "./PlanetCard.jsx";
+import { PlanetsWishlistItem } from "./PlanetsWishlistItem.jsx";
 
 // 🧑🏽‍🚀 Task - Week 2
 // Move this to its own file in this folder.
@@ -59,8 +60,12 @@ export const Destinations = () => {
     if (isPlanetInWishlist(name)) {
       return;
     }
-    setPlanetsWishlist((currentPlanets) => [...currentPlanets, { name, thumbnail }]);
+    setPlanetsWishlist((currentPlanets) => [
+      ...currentPlanets,
+      { name, thumbnail },
+    ]);
   };
+
   const removePlanetFromWishlist = (name) => {
     // 🧑🏽‍🚀 Task - Week 2
     // Remove the planet from the planets wishlist state.
@@ -83,17 +88,25 @@ export const Destinations = () => {
           ) : (
             <p>You have {planetsWishlist.length} planets in your wishlist</p>
           )}
+          {/* 🧑🏽‍🚀 Use a variable to display the number of wishlist planets:  */}
 
           {/* 🧑🏽‍🚀 Task - Week 3 */}
           {/* Use the AddWishlistItem component here. */}
+          <AddWishlistItem onAddWishlistItem={addPlanetToWishlist} />
 
-          {/* 🧑🏽‍🚀 Task - Week 3
+          {/* 🧑🏽‍🚀 Task - Week 3 */}
+          {/* Use .map() to display the wishlist planets with the PlanetsWishlistItem component. */}
           <h3>Your current wishlist</h3>
           <div className={styles.wishlistList}>
-            ...
-            Use .map() to display the wishlist planets with the PlanetsWishlistItem component. 
-          </div> 
-          */}
+            {planetsWishlist.map((planet, index) => (
+              <PlanetsWishlistItem
+                key={`${planet.name}-${index}`}
+                name={planet.name}
+                thumbnail={planet.thumbnail}
+                onRemove={() => removePlanetFromWishlist(planet.name)}
+              />
+            ))}
+          </div>
         </section>
         <section className="card">
           <h2>Possible destinations</h2>
@@ -118,7 +131,6 @@ export const Destinations = () => {
 };
 
 export default Destinations;
-
 
 // 🧑🏽‍🚀 Task - Week 4 - part 2
 // Hate to break it to you, but you will have to make some changes to the code you already wrote.

@@ -7,6 +7,30 @@
 
 .nasaPicOfTheDayImg {
   width: auto;
-  height: 400px;
+  max-width: 100%;
+  height: auto;
+  max-height: 400px;
+}
 
+.roverGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.roverFigure {
+  margin: 0;
+}
+
+.roverImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+.roverCaption {
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+  opacity: 0.85;
 }

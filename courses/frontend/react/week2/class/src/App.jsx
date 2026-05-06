@@ -12,6 +12,12 @@ import Counter from "./components/Counter";
 import Form from "./components/Form";
 import ToDo from "./components/ToDo";
 import Clock from "./components/Clock";
+import ClickCounter from "./components/ClickCounter";
+import SimpleForm from "./components/SimpleForm";
+import TodoList from "./components/TodoList";
+import DataFetcher from "./components/DataFetcher";
+import WindowResizer from "./components/WindowResizer";
+
 function App() {
   const [count, setCount] = useState(0);
 
@@ -149,6 +155,44 @@ function App() {
       <section>
         <h3>Clock</h3>
         <Clock />
+      </section>
+
+      <div className="ticks"></div>
+      <section id="week3-exercises">
+        <h2>Week 3 session exercises</h2>
+
+        <section>
+          <h3>1. ClickCounter</h3>
+          <ClickCounter />
+        </section>
+
+        <section>
+          <h3>2. SimpleForm</h3>
+          <SimpleForm />
+        </section>
+
+        <section>
+          <h3>3. TodoList</h3>
+          <TodoList />
+        </section>
+
+        <section>
+          <h3>4. Clock</h3>
+          <p>
+            Implemented in the “Clock” section above (<code>useEffect</code> +
+            interval + cleanup).
+          </p>
+        </section>
+
+        <section>
+          <h3>5. DataFetcher</h3>
+          <DataFetcher />
+        </section>
+
+        <section>
+          <h3>6. WindowResizer</h3>
+          <WindowResizer />
+        </section>
       </section>
     </>
   );

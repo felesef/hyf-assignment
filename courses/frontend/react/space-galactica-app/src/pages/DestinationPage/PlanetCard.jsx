@@ -11,10 +11,13 @@ export const PlanetCard = ({
     <div className={styles.planetCard}>
       <img className={styles.planetThumbnail} src={thumbnail} alt={name} />
       <div className={styles.planetDescription}>
-        <h2>{name.toUpperCase()} {isSelected ? "- SELECTED" : ""}</h2>
+        <h2>
+          {name.toUpperCase()} {isSelected ? "- SELECTED" : ""}
+        </h2>
         <p>{description}</p>
       </div>
       <button
+        type="button"
         className="roundButton"
         onClick={() => togglePlanetSelection(name, thumbnail)}
       >
