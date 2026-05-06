@@ -10,6 +10,8 @@ import { MainContent } from "./components/Layout";
 import Toggle from "./components/Toggle";
 import Counter from "./components/Counter";
 import Form from "./components/Form";
+import ToDo from "./components/ToDo";
+import Clock from "./components/Clock";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -136,6 +138,18 @@ function App() {
       <Toggle show={true} />
       <Counter />
       <Form />
+      <div className="ticks"></div>
+      <section id="spacer"></section>
+      <section>
+        <h2>ToDo</h2>
+        <ToDo />
+      </section>
+      <div className="ticks"></div>
+      <section id="spacer"></section>
+      <section>
+        <h3>Clock</h3>
+        <Clock />
+      </section>
     </>
   );
 }
