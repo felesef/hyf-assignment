@@ -8,9 +8,10 @@ import AboutUsPage from "./pages/AboutUsPage/AboutUsPage.jsx";
 import NasaCollaboration from "./pages/NasaCollaborationPage/NasaCollaborationPage.jsx";
 
 import "./main.css";
+import { WishlistProvider } from "./contexts/WishlistContext.jsx";
 
 // 🧑🏽‍🚀 Task - Week 4 - part 1
-// Create a Wishlist context to share the wishlist data across components. 
+// Create a Wishlist context to share the wishlist data across components.
 // There is a /src/contexts folder- you will have to create a new file there.
 // You will have to import and use the context provider here, so that all routes can access the context.
 // The context should have the following properties:
@@ -47,6 +48,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <WishlistProvider>
+      <RouterProvider router={router} />
+    </WishlistProvider>
   </React.StrictMode>,
 );

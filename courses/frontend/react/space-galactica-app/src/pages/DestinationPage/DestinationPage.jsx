@@ -1,8 +1,8 @@
-import { useState } from "react";
 import styles from "./DestinationPage.module.css";
 import { AddWishlistItem } from "./AddWishlistItem.jsx";
 import { PlanetCard } from "./PlanetCard.jsx";
 import { PlanetsWishlistItem } from "./PlanetsWishlistItem.jsx";
+import { useWishlist } from "../../contexts/WishlistContext.jsx";
 
 // 🧑🏽‍🚀 Task - Week 2
 // Move this to its own file in this folder.
@@ -34,14 +34,12 @@ const PLANETS = [
 ];
 
 export const Destinations = () => {
-  const [planetsWishlist, setPlanetsWishlist] = useState([]);
-
-  const isPlanetInWishlist = (planetName) => {
-    // 🧑🏽‍🚀 Task - Week 2
-    // This should be a simple function to check if a given planet is selected.
-    // You will need to work with the array of planets wishlist.
-    return planetsWishlist.some((planet) => planet.name === planetName);
-  };
+  const {
+    planetsWishlist,
+    addPlanetToWishlist,
+    removePlanetFromWishlist,
+    isPlanetInWishlist,
+  } = useWishlist();
 
   const togglePlanetSelection = (name, thumbnail) => {
     // 🧑🏽‍🚀 Task - Week 2
@@ -52,26 +50,6 @@ export const Destinations = () => {
       return;
     }
     addPlanetToWishlist(name, thumbnail);
-  };
-
-  const addPlanetToWishlist = (name, thumbnail) => {
-    // 🧑🏽‍🚀 Task - Week 2
-    // Add the planet to the planets wishlist state.
-    if (isPlanetInWishlist(name)) {
-      return;
-    }
-    setPlanetsWishlist((currentPlanets) => [
-      ...currentPlanets,
-      { name, thumbnail },
-    ]);
-  };
-
-  const removePlanetFromWishlist = (name) => {
-    // 🧑🏽‍🚀 Task - Week 2
-    // Remove the planet from the planets wishlist state.
-    setPlanetsWishlist((currentPlanets) =>
-      currentPlanets.filter((planet) => planet.name !== name),
-    );
   };
 
   return (
