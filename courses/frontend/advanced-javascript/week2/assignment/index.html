@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 2 assignment — Functions &amp; Fastest Presser</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>2. Functions</h1>
+
+    <section id="sec-delay-strings">
+        <h2>2.1–2.3 Delayed messages</h2>
+        <p id="out-2-1" class="out muted">(Loads 2.5s message automatically…)</p>
+        <p id="out-2-2" class="out"></p>
+        <button type="button" id="btn-5-sec">Click me: show text after 5 seconds</button>
+    </section>
+
+    <section id="sec-planets">
+        <h2>2.4 Planet log functions</h2>
+        <p id="out-planets" class="out"></p>
+        <button type="button" id="btn-planet-earth">Log Earth (via runner)</button>
+        <button type="button" id="btn-planet-saturn">Log Saturn (via runner)</button>
+    </section>
+
+    <section id="sec-location">
+        <h2>2.5–2.6 Location (and map)</h2>
+        <button type="button" id="btn-location">Log location</button>
+        <p id="out-location" class="out"></p>
+        <iframe id="map-frame" title="Map" hidden></iframe>
+    </section>
+
+    <section id="sec-run-after-delay">
+        <h2>2.7 runAfterDelay</h2>
+        <label>Delay (seconds): <input type="number" id="input-delay" value="3" min="0" step="0.1"></label>
+        <button type="button" id="btn-run-after-delay">Run after delay</button>
+        <p id="out-run-after-delay" class="out"></p>
+    </section>
+
+    <section id="sec-double-click">
+        <h2>2.8 Double click (two clicks within 0.5s)</h2>
+        <p class="muted">Click anywhere on the page. If two clicks are within 0.5 seconds, you will see a message below.</p>
+        <p id="out-double" class="out"></p>
+    </section>
+
+    <section id="sec-jokes">
+        <h2>2.9 jokeCreator</h2>
+        <button type="button" id="btn-funny-joke">Funny joke</button>
+        <button type="button" id="btn-bad-joke">Bad joke</button>
+        <p id="out-joke" class="out"></p>
+    </section>
+
+    <section id="sec-fn-variable">
+        <h2>3. Function as a variable</h2>
+        <p id="out-fn-array" class="out"></p>
+        <p id="out-fn-styles" class="out"></p>
+        <p id="out-fn-object" class="out"></p>
+    </section>
+
+    <section id="sec-game">
+        <h2>4. The fastest presser</h2>
+        <p>Game length (seconds): <input type="number" id="game-duration" value="10" min="1" step="1"></p>
+        <button type="button" id="btn-start-game">Start game!</button>
+        <p id="game-status" class="out">Press <kbd>S</kbd> vs <kbd>L</kbd> after starting.</p>
+        <p class="out">Player S: <span id="count-s">0</span> · Player L: <span id="count-l">0</span></p>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
