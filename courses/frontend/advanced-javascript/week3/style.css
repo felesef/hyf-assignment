@@ -1,0 +1,117 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.5;
+    color: #1a1a1a;
+    background: linear-gradient(160deg, #e8f4fc 0%, #f5f0e8 100%);
+}
+
+main {
+    max-width: 28rem;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 3rem;
+}
+
+h1 {
+    font-size: 1.35rem;
+    font-weight: 650;
+    margin: 0 0 0.35rem;
+}
+
+.sub {
+    margin: 0 0 1.5rem;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.25rem 1.35rem;
+    box-shadow: 0 8px 28px rgba(15, 45, 80, 0.1);
+}
+
+label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 0.35rem;
+}
+
+input[type="number"],
+select {
+    width: 100%;
+    padding: 0.55rem 0.65rem;
+    font-size: 1rem;
+    border: 1px solid #c8d4e0;
+    border-radius: 8px;
+    background: #fafbfc;
+}
+
+input[type="number"]:focus,
+select:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 1px;
+    border-color: #3b82f6;
+}
+
+.field {
+    margin-bottom: 1rem;
+}
+
+.field:last-of-type {
+    margin-bottom: 0;
+}
+
+.result-box {
+    margin-top: 1.25rem;
+    padding: 1rem;
+    background: #f0f7ff;
+    border-radius: 8px;
+    border: 1px solid #c5ddf5;
+}
+
+.result-box p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #444;
+}
+
+.result-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 0.25rem;
+}
+
+.status {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    min-height: 1.25rem;
+}
+
+.status.loading {
+    color: #2563eb;
+}
+
+.status.error {
+    color: #b91c1c;
+}
+
+footer {
+    margin-top: 1.5rem;
+    font-size: 0.75rem;
+    color: #777;
+}
+
+footer a {
+    color: #2563eb;
+}
